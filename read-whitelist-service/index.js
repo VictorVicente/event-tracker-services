@@ -1,39 +1,12 @@
-const database = require('../aws-services/mySqlService.js');
-const dynamoDB = require('../aws-services/dynamoDBService.js');
+const database = require('./aws-services/mySqlService.js');
+const dynamoDB = require('./aws-services/dynamoDBService.js');
 const Web3 = require('web3');
 
-///////////////////////
-///// Global variables
-///////////////////////
-let web3;
+let web3 = new Web3(new Web3.providers.HttpProvider('https://humbly-learning-spaniel.quiknode.io/de6d5d0a-acdb-43c4-9ff3-a94bc3599135/qNEkiNnOzjxwRd8HTXReSQ==/'));
 
-// Selected network of blockchain
-const selected_network = "mainnet";
-
-// set the provider you want from Web3.providers
-if (typeof web3 !== 'undefined') {
-    web3 = new Web3(web3.currentProvider);
-  } else {
-    // set the provider you want from Web3.providers
-    if (selected_network === "ganache") {
-        web3 = new Web3(new Web3.providers.WebsocketProvider('wss://localhost:8545'));
-    }
-    else if (selected_network === "ropsten") {
-        web3 = new Web3(new Web3.providers.WebsocketProvider('wss://ropsten.infura.io/ws'));
-    }
-    else if (selected_network === "kovan") {
-        //web3 = new Web3(new Web3.providers.WebsocketProvider('wss://kovan.infura.io/ws'));
-        web3 = new Web3(new Web3.providers.HttpProvider(`https://kovan.infura.io/`));
-    }
-    else if (selected_network === "mainnet") {
-        web3 = new Web3(new Web3.providers.WebsocketProvider('wss://humbly-learning-spaniel.quiknode.io/de6d5d0a-acdb-43c4-9ff3-a94bc3599135/qNEkiNnOzjxwRd8HTXReSQ==/'));
-    }
-}
-
-readData();
+readData()
 
 async function readData() {
-    console.log(`Choosen network is ${selected_network.toUpperCase()}`);
     let scriptData = await dynamoDB.getItem('testFunction');
     console.log(scriptData);
 
