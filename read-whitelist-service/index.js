@@ -7,7 +7,7 @@ let web3 = new Web3(new Web3.providers.HttpProvider('https://humbly-learning-spa
 readData()
 
 async function readData() {
-    let scriptData = await dynamoDB.getItem('testFunction');
+    let scriptData = await dynamoDB.getItem('testFunction2');
     console.log(scriptData);
 
     let fromBlock = parseInt(scriptData.lastBlock) + 1;
@@ -68,7 +68,7 @@ async function readData() {
     }
 
     scriptData.lastBlock = toBlock;
-    await dynamoDB.putItem('testFunction', scriptData);
+    await dynamoDB.putItem('testFunction2', scriptData);
 }
 
 function getEventsFromLogs (inputs, logs, eventSignature) {
