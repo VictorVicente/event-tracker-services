@@ -1,7 +1,7 @@
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Create the DynamoDB service object
-var docClient = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
+var docClient = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10', region: 'us-east-1'});
 
 module.exports.putItem = function (key, item) {
     return new Promise((resolve, reject) => {
