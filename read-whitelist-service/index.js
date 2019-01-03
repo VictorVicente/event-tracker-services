@@ -99,5 +99,6 @@ async function insertEventsIntoMySQL (events) {
     ON DUPLICATE KEY
     UPDATE investor = VALUES(investor), dateAdded = VALUES(dateAdded), addedBy = VALUES(addedBy), fromTime = VALUES(fromTime), toTime = VALUES(toTime), expiryTime = VALUES(expiryTime), canBuyFromSTO = VALUES(canBuyFromSTO), raw = VALUES(raw)`;
     let result = await database.query(query, [eventsToInsert]);
+    await database.end();
     console.log(result);
 }
