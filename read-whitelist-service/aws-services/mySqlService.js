@@ -3,10 +3,10 @@ const util = require('util');
 
 var pool = mysql.createPool({
     connectionLimit: 10,
-    host     : process.env.mySqlHost,
-    user     : process.env.mySqlUser,
-    password : process.env.mySqlPassword,
-    database : process.env.network
+    host     : 'mysqltestinstance.cpe4lntrteef.us-east-1.rds.amazonaws.com',
+    user     : 'polymath_admin',
+    password : 'securitytoken',
+    database : 'kovan'
 });
 
 pool.getConnection((err, connection) => {
