@@ -5,6 +5,14 @@ const Web3 = require('web3');
 let web3 = new Web3(new Web3.providers.HttpProvider('https://humbly-learning-spaniel.quiknode.io/de6d5d0a-acdb-43c4-9ff3-a94bc3599135/qNEkiNnOzjxwRd8HTXReSQ==/'));
 
 readData()
+.then(() => {
+    console.log(`Everything worked OK!`);
+    database.end();
+})
+.catch(() => {
+    console.log(`ERROR!!!`);
+    database.end();
+});
 
 async function readData() {
     let scriptData = await dynamoDB.getItem('testFunction2');
@@ -69,7 +77,6 @@ async function readData() {
 
     scriptData.lastBlock = toBlock;
     await dynamoDB.putItem('testFunction2', scriptData);
-    await database.end();
 }
 
 function getEventsFromLogs (inputs, logs, eventSignature) {
