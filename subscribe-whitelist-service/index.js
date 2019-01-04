@@ -1,8 +1,8 @@
 const database = require('./aws-services/mySqlService.js');
 const Web3 = require('web3');
 
-let web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545'));
-//let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://humbly-learning-spaniel.quiknode.io/de6d5d0a-acdb-43c4-9ff3-a94bc3599135/qNEkiNnOzjxwRd8HTXReSQ==/'));
+//let web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545'));
+let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://humbly-learning-spaniel.quiknode.io/de6d5d0a-acdb-43c4-9ff3-a94bc3599135/qNEkiNnOzjxwRd8HTXReSQ==/'));
 
 let eventSignature = web3.eth.abi.encodeEventSignature('ModifyWhitelist(address,uint256,address,uint256,uint256,uint256,bool)');
 var subscription = web3.eth.subscribe('logs', { topics: [eventSignature] }, function (error, result) {
