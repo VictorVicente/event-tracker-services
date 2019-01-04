@@ -1,0 +1,13 @@
+{
+  "name": "event-tracker-services",
+  "version": "0.1.0",
+  "description": "NodeJS services for Event Tracker",
+  "dependencies": {
+    "mysql": "^2.16.0",
+    "util": "^0.11.0",
+    "web3": "^1.0.0-beta.35"
+  },
+  "main": "index.js",
+  "author": "Victor <victor.g.vicente@gmail.com>",
+  "license": "MIT"
+}
