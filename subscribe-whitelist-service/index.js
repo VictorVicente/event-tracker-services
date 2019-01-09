@@ -1,15 +1,21 @@
 const database = require('./aws-services/mySqlService.js');
 const Web3 = require('web3');
 
-//let web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545'));
-let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://humbly-learning-spaniel.quiknode.io/de6d5d0a-acdb-43c4-9ff3-a94bc3599135/qNEkiNnOzjxwRd8HTXReSQ==/'));
+//let networkUrl = 'ws://localhost:8545';
+let networkUrl = 'wss://humbly-learning-spaniel.quiknode.io/de6d5d0a-acdb-43c4-9ff3-a94bc3599135/qNEkiNnOzjxwRd8HTXReSQ==/';
+console.log('Network:', networkUrl);
+let web3 = new Web3(new Web3.providers.WebsocketProvider(networkUrl));
 
-let eventSignature = web3.eth.abi.encodeEventSignature('ModifyWhitelist(address,uint256,address,uint256,uint256,uint256,bool)');
+
+let event = 'ModifyWhitelist(address,uint256,address,uint256,uint256,uint256,bool)';
+console.log('Event:', event);
+let eventSignature = web3.eth.abi.encodeEventSignature(event);
 var subscription = web3.eth.subscribe('logs', { topics: [eventSignature] }, function (error, result) {
     if (!error)
         console.log(result);
 })
 .on('data', async function (log) {
+    console.log('New event catched!');
     let inputs = [
         {
             "indexed": true,
@@ -48,6 +54,8 @@ var subscription = web3.eth.subscribe('logs', { topics: [eventSignature] }, func
         }
     ];
     let event = getEventFromLog(inputs, log);
+    console.log('Decoded log:');
+    console.log(event);
     await insertEventIntoMySQL(event);
 })
 .on('changed', function (log) {
@@ -78,5 +86,7 @@ async function insertEventIntoMySQL (event) {
     ON DUPLICATE KEY
     UPDATE investor = VALUES(investor), dateAdded = VALUES(dateAdded), addedBy = VALUES(addedBy), fromTime = VALUES(fromTime), toTime = VALUES(toTime), expiryTime = VALUES(expiryTime), canBuyFromSTO = VALUES(canBuyFromSTO), raw = VALUES(raw)`;
     let result = await database.query(query, eventToInsert);
-    console.log(result);
+    console.log('Event inserted on MySQL');
+    console.log('Query result:');
+    console.log(result); 
 }
